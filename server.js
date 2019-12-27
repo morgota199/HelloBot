@@ -4,25 +4,18 @@ const key = require("./keybutton/replykeybutton");
 
 const bot = new Bot(config.TOKEN,  {polling: true});
 //433875594
+//519564331
 bot.on('message', (msg) => {
-    // if(msg.new_chat_participant){
-    //     let re_name = new RegExp("{name}", 'g');
-    //     let re_user_id = new RegExp("{name}", 'g');
-    //     let for_replace = "[{name}](tg://user?id={user_id})".replace();
-    //     let message = config.TEXT_HELLO.replace(re, msg.new_chat_participant.first_name);
-    //     let parse_mode = 'Markdown';
-    //     bot.sendMessage(msg.chat.id, message, parse_mode);
-    // }
     if(msg.new_chat_participant){
         let for_replace = '[{name}](tg://user?id={user_id})';
         let re_name = new RegExp("{name}", 'g');
         let re_user_id = new RegExp("{user_id}", 'g');
-        for_replace = for_replace.replace(re_name, for_replace);
+
+        for_replace = config.TEXT_HELLO.replace(re_name, for_replace);
         for_replace = for_replace.replace(re_name, msg.new_chat_participant.first_name);
         for_replace = for_replace.replace(re_user_id, msg.new_chat_participant.id);
-        console.log(for_replace);
-        let parse_mode = 'Markdown';
-        bot.sendMessage(msg.chat.id, message, parse_mode);
+
+        bot.sendMessage(msg.chat.id, for_replace, {parse_mode: "Markdown"});
     }
 });
 
