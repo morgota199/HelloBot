@@ -3,11 +3,13 @@ const config = require("./config");
 const key = require("./keybutton/replykeybutton");
 
 const bot = new Bot(config.TOKEN,  {polling: true});
-
+//433875594
 bot.on('message', (msg) => {
     if(msg.new_chat_participant){
-        console.log(msg.new_chat_participant);
-        bot.sendMessage(msg.chat.id, config.TEXT_HELLO);
+        let re = new RegExp("{name}", 'g');
+        let message = config.TEXT_HELLO.replace(re, msg.new_chat_participant.first_name);
+
+        bot.sendMessage(msg.chat.id, message);
     }
 });
 
